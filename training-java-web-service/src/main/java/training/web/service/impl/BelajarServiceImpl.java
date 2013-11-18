@@ -1,0 +1,165 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package training.web.service.impl;
+
+import java.util.Date;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+import org.hibernate.Hibernate;
+import training.web.dao.BarangDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import training.web.dao.PasienDao;
+import training.web.dao.TransaksiDao;
+import training.web.domain.Barang;
+import training.web.domain.BarangPK;
+import training.web.domain.Pasien;
+import training.web.domain.Transaksi;
+import training.web.service.BelajarService;
+
+/**
+ *
+ * @author adi
+ */
+
+@Service("belajarService")
+@Transactional
+public class BelajarServiceImpl 
+    implements BelajarService {
+    
+    @Autowired
+    private BarangDao barangDao;
+    @Autowired
+    private TransaksiDao transaksiDao;
+    @Autowired
+    private PasienDao pasienDao;
+    
+    @PersistenceUnit
+    private EntityManagerFactory emf;
+    
+    @Override
+    public void save(Barang b) {
+        //RunningNumber number = runningNumberDao.getLastNumber(currnet);
+        //b.setDocumentNumber(number.getNumber());
+        //number.setNumber(number.getNumber + 1);
+        barangDao.save(b);
+        //runningNumberDao.update(number);
+    }
+
+    @Override
+    public void delete(Barang b) {
+        barangDao.delete(b);
+    }
+
+    @Override
+    public Barang findBarangById(BarangPK barangPK) {
+        return barangDao.findOne(barangPK);
+    }
+
+    @Override
+    public Page<Barang> findAllBarang(Pageable pageable) {
+        return barangDao.findAll(pageable);
+    }
+
+    @Override
+    public Long countBarangByTanggal(Date start, Date end) {
+        return barangDao.countBarangByTanggal(start, end);
+    }
+
+    // select * from barang limit 0, 100
+    @Override
+    public List<Barang> findBarangByTanggal(
+            Date start, Date end, Pageable pageable) {
+        return barangDao.findByTanggalBetween(
+                start, end, pageable).getContent();
+    }
+
+    @Override
+    public void save(Transaksi t) {
+        transaksiDao.save(t);
+    }
+
+    @Override
+    public Page<Transaksi> findTransaksiByTanggal(
+            Date start, Date end, Pageable pageable) {
+        
+        Page<Transaksi> result = 
+                transaksiDao.findByTanggalBetween(
+                start, end, pageable);
+        
+        for (Transaksi tr : result.getContent()) {
+            Hibernate.initialize(tr.getDetails());
+        }
+        
+        return result;
+    }
+
+    @Override
+    public List<String> testViewBarang() {
+        EntityManager em = emf.createEntityManager();
+        
+        List<String> viewBarangs = 
+                 em.createNativeQuery(
+                "select kode_cabang as kodeCabang "
+                + "from view_barang")
+//                .setResultTransformer(
+//                Transformer.aliasToBean(ViewBarang.class))
+                .getResultList();
+        return viewBarangs;
+    }
+
+    @Override
+    public Long countBarang() {
+        return barangDao.count();
+    }
+
+    @Override
+    public void save(Pasien p) {
+        pasienDao.save(p);
+    }
+
+    @Override
+    public void delete(Pasien p) {
+        pasienDao.delete(p);
+    }
+
+    @Override
+    public Page<Pasien> findAllPasien(Pageable pageable) {
+        return pasienDao.findAll(pageable);
+    }
+
+//    @Override
+//    public List<Pasien> findPasienByTanggal(
+//            Date start, Date end, Pageable pageable) {
+//        return pasienDao.findByTanggalBetween(
+//    start, end, pageable);         
+//    }
+
+    @Override
+    public Long countPasien() {
+        return pasienDao.count();
+    }
+
+    @Override
+    public Long countPasienByTanggal(Date start, Date end) {
+        return pasienDao.countPasienByTanggal(start, end);
+    }
+
+    @Override
+    public Pasien findPasienById(Pasien pasien) {
+        return pasienDao.findOne(pasien);
+    }
+
+    @Override
+    public List<Pasien> findPasienByTanggal(Date start, Date end, Pageable pageable) {
+        return (List<Pasien>) pasienDao.findByTanggalBetween(start, end, pageable);
+    }
+    
+}
