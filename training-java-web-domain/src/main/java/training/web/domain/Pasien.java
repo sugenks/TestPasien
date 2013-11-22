@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -21,8 +23,10 @@ import javax.persistence.TemporalType;
 @Table(name = "a_rm_pasien")
 public class Pasien {
 
-    @Column(name = "norm", length = 6)
     @Id
+    @Column(name = "norm", unique = true, length = 6, nullable = false)
+    @NotNull
+    @NotEmpty
     private String norm;
 
     @Column(name = "nama", length = 50)
@@ -37,9 +41,29 @@ public class Pasien {
     @Column(name = "sex", length = 1)
     private String sex;
 
+    public String getTelp() {
+        return telp;
+    }
+
+    public void setTelp(String telp) {
+        this.telp = telp;
+    }
+
+    public Date getTanggal() {
+        return tanggal;
+    }
+
+    public void setTanggal(Date tanggal) {
+        this.tanggal = tanggal;
+    }
+
     @Temporal(TemporalType.DATE)
     @Column(name = "tgl_lahir", nullable = false)
     private Date tgl_lahir;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "tanggal")
+    private Date tanggal;
 
     public String getNorm() {
         return norm;
@@ -89,6 +113,7 @@ public class Pasien {
                 + ", alamat_ktp=" + alamat_ktp
                 + ", sex=" + sex
                 + ", tgl_lahir=" + tgl_lahir
+                + ", tanggal=" + tanggal
                 + '}';
     }
 

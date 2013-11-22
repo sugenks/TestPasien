@@ -6,7 +6,7 @@
 
 
 
-function createGridBarang() {
+function createGridPasien() {
 
     $('#gridPasien').datagrid({
         style: 'width:700px; height:200px',
@@ -34,20 +34,15 @@ function createGridBarang() {
             field: 'nama',
             title: 'Nama Pasien',
             width: 110
-        },
-        {
-            field: 'no_ktp',
-            title: 'No KTP',
-            width: 110
-        },
+        },        
         {
             field: 'alamat_ktp',
             title: 'Alamat',
             width: 110
         },
         {
-            field: 'kode_kota_ktp',
-            title: 'Kode Kota',
+            field: 'telp',
+            title: 'Telp',
             width: 110
         },
         {
@@ -56,18 +51,13 @@ function createGridBarang() {
             width: 110
         },
         {
-            field: 'kode_kota_lahir',
-            title: 'Kd Kota Lahir',
-            width: 110
-        },
-        {
-            field: 'tgl_lashir',
+            field: 'tgl_lahir',
             title: 'Tgl Lahir',
             width: 110
         },
         {
-            field: 'usia_th',
-            title: 'usia_th',
+            field: 'tanggal',
+            title: 'Tanggal',
             width: 110
         }
         ]],

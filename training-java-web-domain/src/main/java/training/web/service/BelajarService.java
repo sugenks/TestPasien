@@ -37,9 +37,9 @@ public interface BelajarService {
     
     public void save(Pasien p);
     public void delete(Pasien p);
-    public Pasien findPasienById(Pasien pasien);
-    public Long countPasien();
-    public Long countPasienByTanggal(Date start, Date end);
+//    public Pasien findPasienById(Pasien pasien);
+//    public Long countPasien();
+//    public Long countPasienByTanggal(Date start, Date end);
     public Page<Pasien> findAllPasien(Pageable pageable);
     public List<Pasien> findPasienByTanggal(Date start, Date end, Pageable pageable);
     

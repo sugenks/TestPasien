@@ -28,22 +28,21 @@ import training.web.service.BelajarService;
  *
  * @author adi
  */
-
 @Service("belajarService")
 @Transactional
-public class BelajarServiceImpl 
-    implements BelajarService {
-    
+public class BelajarServiceImpl
+        implements BelajarService {
+
     @Autowired
     private BarangDao barangDao;
     @Autowired
     private TransaksiDao transaksiDao;
     @Autowired
     private PasienDao pasienDao;
-    
+
     @PersistenceUnit
     private EntityManagerFactory emf;
-    
+
     @Override
     public void save(Barang b) {
         //RunningNumber number = runningNumberDao.getLastNumber(currnet);
@@ -89,28 +88,28 @@ public class BelajarServiceImpl
     @Override
     public Page<Transaksi> findTransaksiByTanggal(
             Date start, Date end, Pageable pageable) {
-        
-        Page<Transaksi> result = 
-                transaksiDao.findByTanggalBetween(
-                start, end, pageable);
-        
+
+        Page<Transaksi> result
+                = transaksiDao.findByTanggalBetween(
+                        start, end, pageable);
+
         for (Transaksi tr : result.getContent()) {
             Hibernate.initialize(tr.getDetails());
         }
-        
+
         return result;
     }
 
     @Override
     public List<String> testViewBarang() {
         EntityManager em = emf.createEntityManager();
-        
-        List<String> viewBarangs = 
-                 em.createNativeQuery(
-                "select kode_cabang as kodeCabang "
-                + "from view_barang")
-//                .setResultTransformer(
-//                Transformer.aliasToBean(ViewBarang.class))
+
+        List<String> viewBarangs
+                = em.createNativeQuery(
+                        "select kode_cabang as kodeCabang "
+                        + "from view_barang")
+                //                .setResultTransformer(
+                //                Transformer.aliasToBean(ViewBarang.class))
                 .getResultList();
         return viewBarangs;
     }
@@ -141,25 +140,27 @@ public class BelajarServiceImpl
 //        return pasienDao.findByTanggalBetween(
 //    start, end, pageable);         
 //    }
-
-    @Override
-    public Long countPasien() {
-        return pasienDao.count();
-    }
-
-    @Override
-    public Long countPasienByTanggal(Date start, Date end) {
-        return pasienDao.countPasienByTanggal(start, end);
-    }
-
-    @Override
-    public Pasien findPasienById(Pasien pasien) {
-        return pasienDao.findOne(pasien);
-    }
-
-    @Override
-    public List<Pasien> findPasienByTanggal(Date start, Date end, Pageable pageable) {
-        return (List<Pasien>) pasienDao.findByTanggalBetween(start, end, pageable);
-    }
     
+//    @Override
+//    public Long countPasien() {
+//        return pasienDao.count();
+//    }
+
+//    @Override
+//    public Long countPasienByTanggal(Date start, Date end) {
+//        return pasienDao.countPasienByTanggal(start, end);
+//    }
+
+//    @Override
+//    public Pasien findPasienById(Pasien pasien) {
+//        return pasienDao.findOne(pasien);
+//    }
+
+    @Override
+    public List<Pasien> findPasienByTanggal(
+            Date start, Date end, Pageable pageable) {
+        return pasienDao.findByTanggalBetween(start, end, pageable).getContent();
+
+    }
+
 }

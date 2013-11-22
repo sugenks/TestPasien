@@ -25,12 +25,14 @@ public interface PasienDao extends PagingAndSortingRepository<Pasien, String> {
     public Page<Pasien> cariByNorm(
             @Param("norm") String norm, Pageable pageable);
 
-    public Pasien findByTanggalBetween(
+    public Page<Pasien> findByTanggalBetween(
             Date start, Date end, Pageable pageable);
 
-    public Long countPasienByTanggal(Date start, Date end);
+//    public Long countPasienByTanggal(Date start, Date end);
 
-    public Pasien findOne(Pasien pasien);
+ //   public Pasien findOne(Pasien pasien);
+
+//    public Pasien findOne(Pasien pasien);
     
     
 }

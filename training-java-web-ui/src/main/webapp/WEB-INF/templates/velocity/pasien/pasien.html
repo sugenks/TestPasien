@@ -1,25 +1,32 @@
+
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
-        <title>Daftar Pasien</title>
+        <title>Form Pasien</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <link href="../js/themes/black/easyui.css" rel="stylesheet" />
         <link href="../js/themes/icon.css" rel="stylesheet" />
         <link href="../css/custom.css" rel="stylesheet" />
 
         <script type="text/javascript" src="../js/jquery.min.js"></script>
-        <script type="text/javascript" src="../js/plugins/jquery.linkbutton.js"></script>
         <script type="text/javascript" src="../js/easyloader.js"></script>
         <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+        <script type="text/javascript" src="../js/custom-date.js"></script>
         <script type="text/javascript" src="../js/app/pasien.js"></script>
     </head>
-<!--    <body>
-        <div>TODO write content</div>
-    </body>-->
+
+    <body>
+        <h1>Daftar Pasien</h1>
+        <div id="toolbarPasien">  
+            <a href="print" target="_blank" class="easyui-linkbutton" iconCls="icon-print" plain="true" >Cetak</a>  
+        </div>
+        <table id="gridPasien" title="Pasien List" 
+               style="width:700px;height:250px"
+               class="easyui-datagrid" toolbar="#toolbarPasien">                 
+        </table>
+        <script type="text/javascript">
+            $(document).ready(createGridPasien);
+        </script>
+    </body>
 </html>

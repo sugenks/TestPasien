@@ -36,23 +36,23 @@ public class PasienController {
     public Map<String, Object> getJsonPasien(Pageable pageable) {
         Map<String, Object> result
                 = new HashMap<String, Object>();
-        result.put("total", service.countPasien());
+//        result.put("total", service.countPasien());
         result.put("rows", service.findAllPasien(pageable).getContent());
         return result;
     }
 
-    @RequestMapping(value = "/barang/print",
-            method = RequestMethod.GET)
-    public ModelMap cetakDaftarBarang() {
-
-        Long countPasien = service.countPasien();
-        PageRequest pr = new PageRequest(0, countPasien.intValue());
-
-        ModelMap mm = new ModelMap();
-        mm.put("format", "pdf");
-        mm.put("tanggalCetak", new Date());
-        mm.put("listBarang", service.findAllPasien(pr).getContent());
-        return mm;
-    }
+//    @RequestMapping(value = "/barang/print",
+//            method = RequestMethod.GET)
+//    public ModelMap cetakDaftarBarang() {
+//
+//        Long countPasien = service.countPasien();
+//        PageRequest pr = new PageRequest(0, countPasien.intValue());
+//
+//        ModelMap mm = new ModelMap();
+//        mm.put("format", "pdf");
+//        mm.put("tanggalCetak", new Date());
+//        mm.put("listBarang", service.findAllPasien(pr).getContent());
+//        return mm;
+//    }
 
 }
